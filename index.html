@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<script>
+    function toggleTask(checkbox) {
+
+        let text = checkbox.nextElementSibling;
+
+        if (checkbox.checked) {
+            text.style.textDecoration = "line-through";
+            text.style.opacity = "0.6";
+        } 
+        
+        else {
+            text.style.textDecoration = "none";
+            text.style.opacity = "1";
+        }
+    }
+</script>
+<body>
+
+    <div class="container">
+
+        <h1>TO-DO LIST</h1>
+
+        <form action="/add" method="POST" class="task-form">
+            <input type="text" name="task" placeholder="Enter a task..." required>
+            <button type="submit">Add</button>
+        </form>
+
+        <ul>
+            {% for task in tasks %}
+            <li>
+                <div class="task-content">
+                    <input type="checkbox" onclick="toggleTask(this)">
+                    
+                    <span>
+                    {{ task }}
+                    </span>
+                </div>
+                
+                <a href="/delete/{{ loop.index0 }}">Delete</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+</body>
+</html>
